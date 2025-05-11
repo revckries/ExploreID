@@ -1,6 +1,5 @@
 "use client"
 
-import type { Slider } from "@/components/ui/slider"
 
 import { useRef } from "react"
 import Image from "next/image"
@@ -12,66 +11,36 @@ const destinations = [
     id: 1,
     name: "Borobudur Temple",
     description: "Ancient Buddhist temple with stunning sunrise views",
-    imageUrl: "https://via.placeholder.com/300x200",
+    imageUrl: "/images/zulkifli-ghazali.webp",
   },
   {
     id: 2,
     name: "Prambanan Temple",
     description: "Magnificent Hindu temple complex with intricate carvings",
-    imageUrl: "https://via.placeholder.com/300x200",
+    imageUrl: "/images/wendy-winarno.webp",
   },
   {
     id: 3,
     name: "Mount Bromo",
     description: "Active volcano with breathtaking landscape views",
-    imageUrl: "https://via.placeholder.com/300x200",
+    imageUrl: "/images/kilarov.webp",
   },
   {
     id: 4,
-    name: "Yogyakarta Palace",
-    description: "Cultural center with traditional Javanese architecture",
-    imageUrl: "https://via.placeholder.com/300x200",
+    name: "Komodo National Island",
+    description: "Experience the rare indonesian komodo dragons",
+    imageUrl: "/images/vivien-placzek.webp",
   },
 ]
 
 export default function Hero() {
-  const sliderRef = useRef<Slider>(null)
-
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2.5,
-    slidesToScroll: 1,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1.5,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1.2,
-        },
-      },
-    ],
-  }
 
   return (
     <section className="relative h-screen">
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="https://via.placeholder.com/1920x1080"
+          src="/images/nindy-rahmadani.webp"
           alt="Java landscape"
           fill
           priority
@@ -84,7 +53,7 @@ export default function Hero() {
         <div className="flex flex-col md:flex-row h-full items-center pt-20">
           {/* Left Content */}
           <div className="w-full md:w-1/2 text-white z-10 mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Java's Cultural Wonders</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Explore Indonesia</h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">Our Top Destinations</p>
             <Link
               href="#"

@@ -7,21 +7,21 @@ const blogPosts = [
     title: "Top 10 Hidden Gems in Java",
     author: "Mark Ronson",
     date: "02 May, 2023",
-    imageUrl: "https://via.placeholder.com/350x200",
+    imageUrl: "/images/lina-bob.webp",
   },
   {
     id: 2,
     title: "A Culinary Journey Through Java",
     author: "Mark Ronson",
     date: "15 May, 2023",
-    imageUrl: "https://via.placeholder.com/350x200",
+    imageUrl: "/images/sebastian-staines.webp",
   },
   {
     id: 3,
     title: "The Art of Batik: Java's Cultural Heritage",
     author: "Mark Ronson",
     date: "28 May, 2023",
-    imageUrl: "https://via.placeholder.com/350x200",
+    imageUrl: "/images/roman-bintangh.webp",
   },
 ]
 

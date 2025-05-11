@@ -10,15 +10,15 @@ export default function Home() {
       <Hero />
 
       <FeatureSection
-        imageUrl="https://via.placeholder.com/600x400"
-        title="Discover Ancient Temples"
-        description="Explore the rich cultural heritage of Java through its ancient temples. Our guided tours take you through the historical landmarks that have stood the test of time."
+        imageUrl="/images/andrey-bond.webp"
+        title="🎑Discover Ancient Temples"
+        description="Explore the rich cultural heritage of Bali through its ancient temples. Our guided tours take you through the historical landmarks that have stood the test of time."
         flip={false}
       />
 
       <FeatureSection
-        imageUrl="https://via.placeholder.com/600x400"
-        title="Experience Local Traditions"
+        imageUrl="/images/johan-mouchet.webp"
+        title="🌾Experience Local Traditions"
         description="Immerse yourself in the vibrant local traditions of Java. From traditional dances to culinary delights, experience the authentic culture of the island."
         flip={true}
       />
