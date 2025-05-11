@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState, type FormEvent } from "react"
+import Image from "next/image"
 
 // This function would be replaced with actual API integration
 const submitContact = async (data: any) => {
@@ -61,8 +61,22 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-[#060c20]">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 relative">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image src="/images/silas-baisch.webp" alt="Background" fill className="object-cover" />
+
+        {/* Main Overlay - Same color as before but with opacity */}
+        <div className="absolute inset-0 bg-[#060c20]/80"></div>
+
+        {/* Top Gradient - Fades from solid color to transparent */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#060c20] to-transparent"></div>
+
+        {/* Bottom Gradient - Fades from transparent to solid color */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#060c20] to-transparent"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-lg p-8">
           <h2 className="text-3xl font-bold text-white text-center mb-8">Contact Us</h2>
 
