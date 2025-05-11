@@ -1,7 +1,6 @@
 "use client"
 
-
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
@@ -34,9 +33,104 @@ const destinations = [
 ]
 
 export default function Hero() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  // Handle vertical wheel scroll as horizontal scroll
+  const handleWheel = (e: WheelEvent) => {
+    if (!scrollContainerRef.current) return
+    if (!e.shiftKey) {
+      e.preventDefault()
+      scrollContainerRef.current.scrollLeft += e.deltaY
+    }
+  }
+
+useEffect(() => {
+  const scrollContainer = scrollContainerRef.current
+  if (!scrollContainer) return
+
+  scrollContainer.addEventListener("wheel", handleWheel, { passive: false })
+
+  let isDragging = false
+  let startX = 0
+  let scrollLeft = 0
+  let velocity = 0
+  let lastX = 0
+  let lastTime = 0
+  let momentumId: number
+
+  const onMouseDown = (e: MouseEvent) => {
+    isDragging = true
+    scrollContainer.classList.add("cursor-grabbing")
+    startX = e.pageX
+    scrollLeft = scrollContainer.scrollLeft
+    velocity = 0
+    lastX = e.pageX
+    lastTime = performance.now()
+    cancelAnimationFrame(momentumId)
+  }
+
+  const onMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return
+    e.preventDefault()
+    const x = e.pageX
+    const dx = x - startX
+    scrollContainer.scrollLeft = scrollLeft - dx
+
+    const now = performance.now()
+    const deltaT = now - lastTime
+    if (deltaT > 0) {
+      velocity = (x - lastX) / deltaT // px/ms
+      lastX = x
+      lastTime = now
+    }
+  }
+
+  const onMouseUp = () => {
+    isDragging = false
+    scrollContainer.classList.remove("cursor-grabbing")
+    momentumScroll()
+  }
+
+  const onMouseLeave = () => {
+    if (isDragging) {
+      isDragging = false
+      scrollContainer.classList.remove("cursor-grabbing")
+      momentumScroll()
+    }
+  }
+
+  const momentumScroll = () => {
+    let currentVelocity = velocity * 1000 // convert to px/sec
+    const decay = 0.95
+
+    const animate = () => {
+      if (Math.abs(currentVelocity) < 0.5) return
+      scrollContainer.scrollLeft -= currentVelocity * (1 / 60) // frame time
+      currentVelocity *= decay
+      momentumId = requestAnimationFrame(animate)
+    }
+
+    momentumId = requestAnimationFrame(animate)
+  }
+
+  scrollContainer.addEventListener("mousedown", onMouseDown)
+  scrollContainer.addEventListener("mousemove", onMouseMove)
+  scrollContainer.addEventListener("mouseup", onMouseUp)
+  scrollContainer.addEventListener("mouseleave", onMouseLeave)
+
+  return () => {
+    scrollContainer.removeEventListener("wheel", handleWheel)
+    scrollContainer.removeEventListener("mousedown", onMouseDown)
+    scrollContainer.removeEventListener("mousemove", onMouseMove)
+    scrollContainer.removeEventListener("mouseup", onMouseUp)
+    scrollContainer.removeEventListener("mouseleave", onMouseLeave)
+    cancelAnimationFrame(momentumId)
+  }
+}, [])
+
 
   return (
-    <section className="relative h-screen">
+    <section className="relative h-screen select-none">
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0">
         <Image
@@ -44,7 +138,7 @@ export default function Hero() {
           alt="Java landscape"
           fill
           priority
-          className="object-cover"
+          className="object-cover select-none pointer-events-none"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#060c20]"></div>
       </div>
@@ -64,17 +158,20 @@ export default function Hero() {
           </div>
 
           {/* Right Carousel */}
-          <div className="w-full md:w-1/2 z-10 overflow-x-auto pb-4">
+          <div
+            ref={scrollContainerRef}
+            className="w-full md:w-1/2 z-10 overflow-x-auto pb-4 cursor-grab select-none"
+          >
             <div className="flex space-x-4">
               {destinations.map((destination) => (
                 <div key={destination.id} className="min-w-[280px] flex-shrink-0">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden h-full">
-                    <div className="relative h-48">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden h-full select-none">
+                    <div className="relative h-48 select-none">
                       <Image
                         src={destination.imageUrl || "/placeholder.svg"}
                         alt={destination.name}
                         fill
-                        className="object-cover"
+                        className="object-cover select-none pointer-events-none"
                       />
                     </div>
                     <div className="p-4 relative">
