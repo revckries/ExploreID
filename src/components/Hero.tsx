@@ -129,6 +129,7 @@ useEffect(() => {
 }, [])
 
 
+
   return (
     <section className="relative h-screen select-none">
       {/* Background Image with Gradient Overlay */}
