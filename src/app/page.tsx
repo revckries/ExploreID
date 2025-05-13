@@ -1,12 +1,21 @@
+"use client"
+
+import { useState } from "react"
+import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import FeatureSection from "@/components/FeatureSection"
 import StatSection from "@/components/StatSection"
 import BlogTeaser from "@/components/BlogTeaser"
 import ContactForm from "@/components/ContactForm"
+import Footer from "@/components/Footer"
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("")
+
   return (
     <>
+      <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+
       <Hero />
 
       <FeatureSection
@@ -28,6 +37,8 @@ export default function Home() {
       <BlogTeaser />
 
       <ContactForm />
+
+      <Footer />
     </>
   )
 }
