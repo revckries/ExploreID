@@ -20,7 +20,7 @@ export default function Footer() {
               <Image src="/logo.png" alt="Java Travel Logo" width={120} height={40} className="h-10 w-auto" />
             </Link>
             <p className="text-gray-400 mb-4">
-              Discover the cultural wonders of Java with our expertly curated travel experiences. We make your journey
+              Discover the cultural wonders of Indonesia with our expertly curated travel experiences. We make your journey
               memorable.
             </p>
           </div>
@@ -79,7 +79,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} Java Travel. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ExploreID. All rights reserved.</p>
         </div>
       </div>
     </footer>

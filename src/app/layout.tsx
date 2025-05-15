@@ -5,8 +5,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Java Travel - Discover Cultural Wonders",
-  description: "Explore the cultural wonders of Java with our curated travel experiences",
+  title: "ExploreID - Discover Cultural Wonders",
+  description: "Explore the cultural wonders of Indonesia with our curated travel experiences",
 }
 
 export const viewport = {
