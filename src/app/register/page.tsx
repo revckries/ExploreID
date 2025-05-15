@@ -21,10 +21,10 @@ export default function Register() {
 
   return (
     <div
-      className="min-h-screen bg-[#060c20] flex justify-center items-center p-4 bg-cover bg-center"
+      className="min-h-screen flex justify-center items-center p-4 bg-cover bg-center"
       style={{ backgroundImage: "url('/images/silas.webp')" }}
     >
-      <div className="relative w-full max-w-md bg-white/10 backdrop-blur-xl border-2 border-white/50 rounded-3xl shadow-xl p-10 overflow-hidden">
+      <div className="relative w-full max-w-md bg-[#060c20]/50 backdrop-blur-xl border-2 border-white/50 rounded-3xl shadow-xl p-10 overflow-hidden">
         <Link
           href="/"
           className="absolute top-0 right-0 w-12 h-12 bg-black flex justify-center items-center rounded-bl-3xl z-10"
@@ -103,7 +103,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full h-12 bg-white text-[#060c20] border-none outline-none rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-white/90"
+            className="w-full h-12 bg-[#93c5fd] text-[#060c20] border-none outline-none rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-[#93c5fd]/90"
           >
             Register
           </button>
