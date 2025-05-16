@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
           {/* Tombol Login/Register */}
           <div className="flex gap-4 text-black">
             <Link href="/login">
-              <button className="px-4 py-2 bg-blue-300 text-white rounded-full hover:bg-blue-400 transition">
+              <button className="px-4 py-2 bg-blue-300 text-black rounded-full hover:bg-blue-400 transition">
                 Login
               </button>
             </Link>

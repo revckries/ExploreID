@@ -8,11 +8,18 @@ import AllDestination from '@/components/AllDestinations';
 import Itinerary from '@/components/Itinerary';
 import Footer from '@/components/Footer';
 
+//tambahan
+import { supabase } from '@/lib/supabaseClient';
+
 export interface Destination {
   Place: string;
   Picture: string;
   Location: string;
   'Tourism/Visitor Fee (approx in USD)': string;
+
+  //tambahan
+  
+
 }
 
 const Explore: React.FC = () => {
@@ -21,6 +28,9 @@ const Explore: React.FC = () => {
   const [favorites, setFavorites] = useState<Destination[]>([]);
   const [query, setQuery] = useState('');
 
+  //tambahan
+  const [loading, setLoading] = useState(true);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const place = searchParams.get('place');
@@ -28,16 +38,43 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
+    //tambahan
+    const loadDestinations = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('bali_destinations')
+        .select('places, picture, location, tourism_visitor_fee');
+      if (error) {
+        console.error('Error fetching destinations:', error);
+        setLoading(false);
+        return;
+      }
+      const mapped: Destination[] = data.map((row: any) => ({
+        Place: row.places,
+        Picture: row.picture,
+        Location: row.location,
+        'Tourism/Visitor Fee (approx in USD)': row.tourism_visitor_fee,
+        
+        //tambahan 
 
-    fetch('/dataset/destinationBali.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setDestinations(data);
-        setFilteredDestinations(data);
-      })
-      .catch((err) => {
-        console.error('Failed to load destination data:', err);
-      });
+      }));
+      setDestinations(mapped);
+      setFilteredDestinations(mapped);
+      setLoading(false);
+    };
+    loadDestinations();
+
+  //   fetch('/dataset/destinationBali.json')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setDestinations(data);
+  //       setFilteredDestinations(data);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to load destination data:', err);
+  //     });
+
+
 
     return () => {
       document.documentElement.style.scrollBehavior = '';
@@ -75,12 +112,21 @@ const Explore: React.FC = () => {
     );
     setFilteredDestinations(filtered);
   };
+  
+  if (loading) {
+   return (
+     <div className="min-h-screen flex items-center justify-center bg-[#060c20] text-white">
+       <p>Loading destinations…</p>
+     </div>
+   );
+  }
 
   if (place && destinations.length > 0) {
     return <DetailDestination place={place} destinations={destinations} />;
   }
 
   const isSearching = query && query.trim() !== '';
+
 
   return (
     <div className="min-h-screen bg-[#060c20] text-white overflow-x-hidden relative">
@@ -95,6 +141,7 @@ const Explore: React.FC = () => {
               {query ? `Search Results for "${query}"` : 'Explore Destination'}
             </h2>
             {filteredDestinations.length > 0 ? (
+   
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {filteredDestinations.map((dest) => (
                   <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
@@ -167,6 +214,8 @@ const DestinationCard: React.FC<{ dest: Destination; onClick: (place: string) =>
     <div className="absolute bottom-5 left-5 text-white z-10">
       <p className="text-xl font-bold drop-shadow">{dest.Place}</p>
       <p className="text-sm text-gray-200">{dest.Location}</p>
+
+
     </div>
   </div>
 );

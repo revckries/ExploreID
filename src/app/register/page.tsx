@@ -1,8 +1,11 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+
+// tambahkan 1
+import { supabase } from '@/lib/supabaseClient';
+
 import Link from "next/link"
 import { IoCloseOutline, IoLockClosedOutline } from "react-icons/io5"
 import { BsEnvelope, BsPerson } from "react-icons/bs"
