@@ -2,9 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AddToList from '@/components/Explore/AddToList';
+<<<<<<< HEAD
+import { MapPin, Star, DollarSign, Users, X } from 'lucide-react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+=======
 import { MapPin, Star, DollarSign, Users, X } from 'lucide-react'; // Tambah X icon
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion'; // Tambah AnimatePresence
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 
 interface Destination {
   Place: string;
@@ -57,6 +63,8 @@ const contentVariants = {
   },
 };
 
+<<<<<<< HEAD
+=======
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -66,6 +74,7 @@ const itemVariants = {
   },
 };
 
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 const imageSlideVariants = {
   hidden: { opacity: 0, x: -100 },
   visible: {
@@ -102,7 +111,11 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
   const [reviews, setReviews] = useState<Review[]>([]);
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [hotels, setHotels] = useState<Hotel[]>([]);
+<<<<<<< HEAD
+  const [showImageModal, setShowImageModal] = useState(false);
+=======
   const [showImageModal, setShowImageModal] = useState(false); // State baru untuk modal
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 
   useEffect(() => {
     if (place) {
@@ -187,12 +200,17 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
     );
   }
 
+<<<<<<< HEAD
+  const getGoogleMapsUrl = (source: string) => {
+    return source || '#';
+=======
   const getGoogleMapsUrl = (coordinate: string) => {
     const [lat, lng] = coordinate.split(',').map(Number);
     if (!isNaN(lat) && !isNaN(lng)) {
       return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     }
     return '#';
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   };
 
   let imageUrl = (destination?.Picture || '/placeholder.jpg').toString();
@@ -214,12 +232,19 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
         </button>
 
         <motion.div
+<<<<<<< HEAD
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start mb-12 md:mb-16"
+=======
           className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12 md:mb-16"
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           initial="hidden"
           animate="visible"
           variants={contentVariants}
         >
+<<<<<<< HEAD
+=======
           {/* Gambar Destinasi di Kiri */}
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           <motion.div
             className="rounded-2xl overflow-hidden shadow-lg md:order-1"
             variants={imageSlideVariants}
@@ -243,7 +268,10 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
             </div>
           </motion.div>
 
+<<<<<<< HEAD
+=======
           {/* Deskripsi & Detail di Kanan */}
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           <motion.div
             className="bg-[#0e253b] border border-[#1e3b57] p-6 md:p-8 rounded-2xl shadow-xl flex flex-col h-full md:order-2"
             variants={textSlideVariants}
@@ -255,6 +283,52 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
               <span className="text-white">{destination.Location}</span>. {destination.Description || 'This destination offers unique attractions and breathtaking views that make it a must-visit spot in Bali.'}
             </p>
 
+<<<<<<< HEAD
+            {/* Perbaikan untuk Meratakan Titik Dua */}
+            <div className="grid grid-cols-[min-content_1fr] gap-x-4 gap-y-3 mb-6 text-blue-100">
+              <div className="flex items-start">
+                <DollarSign size={20} className="text-blue-400 mr-3 flex-shrink-0" />
+                <span className="font-semibold text-white whitespace-nowrap">Visitor Fee:</span>
+              </div>
+              <span className="text-blue-400 font-medium">
+                {destination['Tourism/Visitor Fee (approx in USD)'] || 'N/A'}
+              </span>
+
+              <a
+                href={getGoogleMapsUrl(destination.Source)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start text-blue-100 hover:text-blue-300 transition group"
+              >
+                <MapPin size={20} className="text-blue-400 mr-3 flex-shrink-0 group-hover:text-blue-300" />
+                <span className="font-semibold text-white whitespace-nowrap">Location:</span>
+              </a>
+              <a
+                href={getGoogleMapsUrl(destination.Source)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-100 hover:text-blue-300 transition"
+              >
+                <span className="ml-0 hover:underline">{destination.Location}</span>
+                <span className="ml-2 text-xs text-gray-400 group-hover:text-blue-300">(View on Map)</span>
+              </a>
+
+              <div className="flex items-center">
+                <Star size={20} className="text-yellow-400 mr-3 flex-shrink-0" />
+                <span className="font-semibold text-white whitespace-nowrap">Google Rating:</span>
+              </div>
+              <span className="text-yellow-400 font-medium">
+                {destination['Google Maps Rating'] ? `${destination['Google Maps Rating']} / 5` : 'N/A'}
+              </span>
+
+              <div className="flex items-center">
+                <Users size={20} className="text-green-400 mr-3 flex-shrink-0" />
+                <span className="font-semibold text-white whitespace-nowrap">Reviews Count:</span>
+              </div>
+              <span className="text-green-300 font-medium">
+                {destination['Google Reviews (Count)'] || 0} Reviews
+              </span>
+=======
             <div className="space-y-4 mb-6">
               <div className="flex items-center text-blue-100">
                 <DollarSign size={20} className="text-blue-400 mr-3 flex-shrink-0" />
@@ -284,6 +358,7 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
                 <span className="font-semibold text-white">Reviews Count:</span>
                 <span className="ml-2 text-green-300 font-medium">{destination['Google Reviews (Count)'] || 0} Reviews</span>
               </div>
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
             </div>
 
             <div className="mt-auto pt-6 border-t border-[#1e3b57]">
@@ -359,13 +434,21 @@ const DetailDestination: React.FC<DetailDestinationProps> = ({ place, destinatio
             <motion.div
               className="relative max-w-4xl max-h-[90vh] w-full h-full bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center"
               variants={modalContentVariants}
+<<<<<<< HEAD
+              onClick={(e) => e.stopPropagation()}
+=======
               onClick={(e) => e.stopPropagation()} // Mencegah klik di dalam modal menutupnya
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
             >
               <Image
                 src={imageUrl}
                 alt={imageAlt}
                 fill
+<<<<<<< HEAD
+                className="object-contain"
+=======
                 className="object-contain" // object-contain agar gambar tidak terpotong
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
               />
               <button
                 className="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 transition"

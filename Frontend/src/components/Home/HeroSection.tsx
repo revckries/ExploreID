@@ -92,6 +92,10 @@ const HeroSection: React.FC = () => {
               objectFit="cover"
               quality={90}
               priority={currentImageIndex === 0}
+<<<<<<< HEAD
+              suppressHydrationWarning
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
             />
           </motion.div>
         </motion.div>
@@ -126,10 +130,21 @@ const HeroSection: React.FC = () => {
           variants={buttonGroupVariants}
         >
           <Link href="/explore" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-colors duration-300 transform hover:scale-105">
+<<<<<<< HEAD
+            <button suppressHydrationWarning>
+              Explore Destinations
+            </button>
+          </Link>
+          <Link href="/tour-guides" className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+            <button suppressHydrationWarning>
+              Plan Your Journey
+            </button>
+=======
             Explore Destinations
           </Link>
           <Link href="/tour-guides" className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
             Plan Your Journey
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           </Link>
         </motion.div>
       </div>

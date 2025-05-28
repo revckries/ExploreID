@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+// File: D:\SEM 4\SE\Project\progress\ExploreID - final 3\Frontend\src\app\tour-guides\page.tsx
+=======
 // File: D:\SEM 4\SE\Project\progress\ExploreID - final 2\Frontend\src\app\tour-guides\page.tsx
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 import * as entry from '../../../../src/app/tour-guides/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

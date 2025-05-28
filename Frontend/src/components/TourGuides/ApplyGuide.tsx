@@ -1,15 +1,26 @@
 import React from 'react';
 
 interface ApplyGuideModalProps {
+<<<<<<< HEAD
+  isVisible: boolean;
+=======
   isVisible: boolean; 
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   formData: {
     name: string;
     language: string;
     price: string;
     description: string;
+<<<<<<< HEAD
+    cvFile: File | null;
+  };
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+=======
     picture: string;
   };
   onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   onSubmit: () => void;
   onClose: () => void;
 }
@@ -18,6 +29,10 @@ const ApplyGuideModal: React.FC<ApplyGuideModalProps> = ({
   isVisible,
   formData,
   onInputChange,
+<<<<<<< HEAD
+  onFileChange,
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   onSubmit,
   onClose,
 }) => {
@@ -25,8 +40,13 @@ const ApplyGuideModal: React.FC<ApplyGuideModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 px-4">
       <div
+<<<<<<< HEAD
+        className={`bg-[#1f1d2b] rounded-3xl p-6 w-full max-w-md shadow-2xl transform transition-all duration-300
+          ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+=======
         className={`bg-[#1f1d2b] rounded-3xl p-6 w-full max-w-md shadow-2xl transform transition-all duration-300 
           ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`} 
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
       >
         <h2 className="text-2xl font-semibold mb-4 text-center">Apply as Tour Guide</h2>
 
@@ -62,6 +82,27 @@ const ApplyGuideModal: React.FC<ApplyGuideModalProps> = ({
           rows={4}
           className="w-full mb-3 p-3 rounded-xl bg-[#060c20] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 resize-y"
         />
+<<<<<<< HEAD
+        <div className="mb-4">
+          <label htmlFor="cvUpload" className="block text-white text-sm font-medium mb-1">
+            Upload CV
+          </label>
+          <input
+            type="file"
+            id="cvUpload"
+            name="cvFile"
+            accept=".pdf,.doc,.docx"
+            onChange={onFileChange}
+            // MODIFIED CLASS NAMES FOR LESS OVAL SHAPE
+            className="w-full p-3 rounded-xl bg-[#060c20] border border-gray-700 text-white
+                       file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm
+                       file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          {formData.cvFile && (
+            <p className="text-sm text-gray-400 mt-2">Selected file: {formData.cvFile.name}</p>
+          )}
+        </div>
+=======
         <input
           type="text"
           name="picture"
@@ -70,6 +111,7 @@ const ApplyGuideModal: React.FC<ApplyGuideModalProps> = ({
           onChange={onInputChange}
           className="w-full mb-4 p-3 rounded-xl bg-[#060c20] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
         />
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 
         <div className="flex justify-between mt-6">
           <button

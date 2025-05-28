@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+'use client';
+
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 import React, { useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
 
@@ -21,6 +26,10 @@ const Itinerary: React.FC<ItineraryProps> = ({ place }) => {
         <button
           onClick={() => setOpen(true)}
           className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-300 text-white py-3 px-6 rounded-full shadow-lg flex items-center gap-2 font-bold transition duration-300 z-[20]"
+<<<<<<< HEAD
+          suppressHydrationWarning
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
         >
           <Sparkles className="w-5 h-5 text-white" />
           <span className="hidden md:block">Create Itinerary</span>
@@ -31,7 +40,11 @@ const Itinerary: React.FC<ItineraryProps> = ({ place }) => {
         <div className="fixed bottom-6 right-6 w-[350px] bg-blue-100 text-blue-900 p-6 rounded-3xl shadow-2xl transition-all duration-700 z-[20]">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-blue-700">Itinerary Generator</h3>
+<<<<<<< HEAD
+            <button onClick={() => setOpen(false)} suppressHydrationWarning>
+=======
             <button onClick={() => setOpen(false)}>
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
               <X className="text-blue-500 hover:text-red-500" />
             </button>
           </div>
@@ -48,11 +61,19 @@ const Itinerary: React.FC<ItineraryProps> = ({ place }) => {
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
             className="w-full bg-blue-200 text-blue-900 p-2 rounded-md mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
+<<<<<<< HEAD
+            suppressHydrationWarning
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           />
 
           <button
             onClick={generateItinerary}
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+<<<<<<< HEAD
+            suppressHydrationWarning
+=======
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           >
             Generate
           </button>
@@ -69,4 +90,8 @@ const Itinerary: React.FC<ItineraryProps> = ({ place }) => {
   );
 };
 
+<<<<<<< HEAD
 export default Itinerary;
+=======
+export default Itinerary;
+>>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
