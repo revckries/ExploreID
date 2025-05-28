@@ -17,20 +17,12 @@ export default function Register() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-<<<<<<< HEAD
-  const [rememberMe, setRememberMe] = useState(false)
-=======
   const [rememberMe, setRememberMe] = useState(false) // State rememberMe ditambahkan kembali
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   const [isExiting, setIsExiting] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-<<<<<<< HEAD
-    console.log({ username, email, password, rememberMe })
-=======
     console.log({ username, email, password, rememberMe }) // Gunakan rememberMe state
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
     window.location.href = "/"
   }
 
@@ -78,17 +70,9 @@ export default function Register() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
-<<<<<<< HEAD
-                  suppressHydrationWarning 
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${username ? "top-[-5px]" : ""}`}
-                  suppressHydrationWarning 
-=======
-                />
-                <label
-                  className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${username ? "top-[-5px]" : ""}`}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 >
                   Username
                 </label>
@@ -104,17 +88,9 @@ export default function Register() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
-<<<<<<< HEAD
-                  suppressHydrationWarning 
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
-                  suppressHydrationWarning 
-=======
-                />
-                <label
-                  className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 >
                   Email
                 </label>
@@ -130,17 +106,9 @@ export default function Register() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
-<<<<<<< HEAD
-                  suppressHydrationWarning 
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
-                  suppressHydrationWarning 
-=======
-                />
-                <label
-                  className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 >
                   Password
                 </label>
@@ -150,16 +118,9 @@ export default function Register() {
                 <label className="text-sm text-white font-medium flex items-center">
                   <input
                     type="checkbox"
-<<<<<<< HEAD
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="mr-2 accent-white"
-                    suppressHydrationWarning 
-=======
                     checked={rememberMe} // Diikat ke state rememberMe
                     onChange={(e) => setRememberMe(e.target.checked)} // Mengontrol state rememberMe
                     className="mr-2 accent-white"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                   />
                   Remember me
                 </label>
@@ -168,10 +129,6 @@ export default function Register() {
               <button
                 type="submit"
                 className="w-full h-12 bg-[#93c5fd] text-[#060c20] border-none outline-none rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-[#93c5fd]/90"
-<<<<<<< HEAD
-                suppressHydrationWarning 
-=======
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
               >
                 Register
               </button>

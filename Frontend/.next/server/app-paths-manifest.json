@@ -1,13 +1,8 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-<<<<<<< HEAD
-  "/tour-guides/page": "app/tour-guides/page.js",
-  "/page": "app/page.js"
-=======
   "/page": "app/page.js",
   "/tour-guides/page": "app/tour-guides/page.js",
   "/register/page": "app/register/page.js",
   "/login/page": "app/login/page.js",
   "/explore/page": "app/explore/page.js"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 }

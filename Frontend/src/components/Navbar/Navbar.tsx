@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-'use client';
-
-=======
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -44,11 +39,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
-<<<<<<< HEAD
-            <Image src="/logo.png" alt="Logo" width={36} height={36} className="object-contain" suppressHydrationWarning />
-=======
             <Image src="/logo.png" alt="Logo" width={36} height={36} className="object-contain" />
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           </div>
 
           <nav className="flex gap-6 text-white font-medium">
@@ -67,17 +58,8 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               className="bg-transparent w-full text-sm text-black placeholder-gray-500 focus:outline-none"
-<<<<<<< HEAD
-              suppressHydrationWarning 
-            />
-            <button 
-              className="ml-2 px-3 py-1 bg-blue-300 text-black text-sm font-semibold rounded-full hover:bg-blue-400 transition"
-              suppressHydrationWarning
-            >
-=======
             />
             <button className="ml-2 px-3 py-1 bg-blue-300 text-black text-sm font-semibold rounded-full hover:bg-blue-400 transition">
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
               Search
             </button>
           </div>
@@ -85,23 +67,14 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
           <button
             onClick={() => setShowFilter(!showFilter)}
             className="flex items-center gap-1 bg-blue-100 px-4 py-2 rounded-full shadow-lg text-black hover:bg-blue-200 transition"
-<<<<<<< HEAD
-            suppressHydrationWarning
-=======
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           >
             <Filter size={16} />
             Filter
           </button>
 
           <div className="flex gap-4"> 
-<<<<<<< HEAD
-            <Link href="/login" className="px-4 py-2 bg-blue-300 text-black rounded-full hover:bg-blue-400 transition">
-              <button suppressHydrationWarning>
-=======
             <Link href="/login">
               <button className="px-4 py-2 bg-blue-300 text-black rounded-full hover:bg-blue-400 transition">
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 Login
               </button>
             </Link>

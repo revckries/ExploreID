@@ -73,17 +73,9 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
-<<<<<<< HEAD
-                  suppressHydrationWarning 
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
-                  suppressHydrationWarning 
-=======
-                />
-                <label
-                  className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 >
                   Email
                 </label>
@@ -99,17 +91,9 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
-<<<<<<< HEAD
-                  suppressHydrationWarning 
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
-                  suppressHydrationWarning 
-=======
-                />
-                <label
-                  className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 >
                   Password
                 </label>
@@ -122,17 +106,10 @@ export default function Login() {
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="mr-2 accent-white"
-<<<<<<< HEAD
-                    suppressHydrationWarning 
-                  />
-                  Remember me
-                </label>
-=======
                   />
                   Remember me
                 </label>
                 {/* Modern Link usage, no a tag inside */}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                 <Link href="/forgot-password" className="text-sm text-white hover:underline">
                   Forgot Password?
                 </Link>
@@ -141,10 +118,6 @@ export default function Login() {
               <button
                 type="submit"
                 className="w-full h-12 bg-[#93c5fd] text-[#060c20] border-none outline-none rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-[#93c5fd]/90"
-<<<<<<< HEAD
-                suppressHydrationWarning 
-=======
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
               >
                 Login
               </button>
@@ -152,10 +125,7 @@ export default function Login() {
               <div className="text-center text-white text-sm font-medium mt-6">
                 <p className="flex flex-col sm:flex-row items-center justify-center gap-2">
                   Don't have an account?
-<<<<<<< HEAD
-=======
                   {/* Perbaikan di sini: Langsung bungkus button dengan Link, dan gunakan onClick pada Link */}
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
                   <Link
                     href="/register"
                     onClick={handleRegisterClick}

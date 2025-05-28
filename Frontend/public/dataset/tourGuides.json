@@ -5,11 +5,7 @@
     "language": "English, Indonesian",
     "price": "Rp 300.000 / day",
     "description": "Experienced local guide from Ubud, offering cultural and nature tours across Bali.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide1.webp"
-=======
     "picture": "/images/tourguides/made.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "898403ca-2197-43fd-bb33-9af026c331d7",
@@ -17,11 +13,7 @@
     "language": "French, Indonesian",
     "price": "Rp 350.000 / day",
     "description": "Fluent in French and specializes in romantic getaways and beach tours.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide2.webp"
-=======
     "picture": "/images/tourguides/kadek.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "b64be11f-4e7f-4ace-8f16-c98950170cae",
@@ -29,11 +21,7 @@
     "language": "German, English, Indonesian",
     "price": "Rp 400.000 / day",
     "description": "Great for historical site visits and hidden local spots. Speaks multiple languages.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide3.webp"
-=======
     "picture": "/images/tourguides/wayan.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "db53da87-48ad-4658-8563-6a9821f04301",
@@ -41,11 +29,7 @@
     "language": "Japanese, English",
     "price": "Rp 450.000 / day",
     "description": "Friendly guide with in-depth knowledge of Bali's temples and traditions.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide4.webp"
-=======
     "picture": "/images/tourguides/komang.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "8f7a6536-5f38-4a77-a12c-8a5fb1aa7230",
@@ -53,11 +37,7 @@
     "language": "English, Indonesian",
     "price": "Rp 320.000 / day",
     "description": "Perfect for family-friendly tours and nature explorations.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide5.webp"
-=======
     "picture": "/images/tourguides/nyoman.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "4b7a9d00-6802-40ad-8743-f329d7c3f087",
@@ -65,11 +45,7 @@
     "language": "Korean, English",
     "price": "Rp 370.000 / day",
     "description": "Loves guiding Korean tourists through Bali's popular destinations and food tours.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide6.webp"
-=======
     "picture": "/images/tourguides/dewi.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "f65d1727-da24-4c8d-8175-c2c753c51409",
@@ -77,11 +53,7 @@
     "language": "Russian, Indonesian",
     "price": "Rp 500.000 / day",
     "description": "Great for high-end and personalized private experiences around Bali.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide7.webp"
-=======
     "picture": "/images/tourguides/gede.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   },
   {
     "id": "088f6608-4d64-4116-b2f2-caf4760f7d83",
@@ -89,10 +61,6 @@
     "language": "Mandarin, English",
     "price": "Rp 380.000 / day",
     "description": "Specializes in Chinese-speaking tourists, great with cultural sites and shopping spots.",
-<<<<<<< HEAD
-    "picture": "./public/assets/tourGuide/tour-guide8.webp"
-=======
     "picture": "/images/tourguides/putri.jpg"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
   }
 ]

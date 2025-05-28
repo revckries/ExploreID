@@ -73,18 +73,10 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
           <Image
             src={imageUrl}
             alt={title}
-<<<<<<< HEAD
-            fill
-            objectFit="cover"
-            quality={90}
-            className="transition-transform duration-500 hover:scale-105"
-            suppressHydrationWarning
-=======
             layout="fill"
             objectFit="cover"
             quality={90}
             className="transition-transform duration-500 hover:scale-105"
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
           />
         </div>
       </motion.div>
@@ -99,13 +91,8 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
         <p className="text-base text-gray-300 mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
           {description}
         </p>
-<<<<<<< HEAD
-        <Link href={buttonLink} className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
-          <button suppressHydrationWarning>
-=======
         <Link href={buttonLink}>
           <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
             {buttonText}
           </button>
         </Link>

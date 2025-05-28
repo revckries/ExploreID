@@ -11,21 +11,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-<<<<<<< HEAD
-=======
     "/explore/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/explore/page.js"
     ],
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
     "/tour-guides/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/tour-guides/page.js"
     ],
-<<<<<<< HEAD
-=======
     "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -36,7 +31,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/register/page.js"
     ],
->>>>>>> 792cb8520518d6091513d49a2301aa8948dada66
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
