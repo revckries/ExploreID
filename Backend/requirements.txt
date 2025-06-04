@@ -1,0 +1,10 @@
+Flask
+pymongo
+Flask-PyMongo
+Werkzeug
+python-dotenv
+Flask-CORS
+PyJWT
+bcrypt
+Flask-SQLAlchemy
+requests

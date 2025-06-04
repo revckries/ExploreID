@@ -58,32 +58,72 @@ const ContactUsSection: React.FC = () => {
           <form className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                <input type="text" id="name" name="name" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent" placeholder="Your Name" />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent"
+                  placeholder="Your Name"
+                  suppressHydrationWarning // Add this line
+                />
                 <label htmlFor="name" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Your Name</label>
               </div>
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                <input type="email" id="email" name="email" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent" placeholder="Your Email" />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent"
+                  placeholder="Your Email"
+                  suppressHydrationWarning // Add this line
+                />
                 <label htmlFor="email" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Your Email</label>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                <input type="text" id="phone" name="phone" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent" placeholder="Phone Number" />
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent"
+                  placeholder="Phone Number"
+                  suppressHydrationWarning // Add this line
+                />
                 <label htmlFor="phone" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Phone Number</label>
               </div>
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                <input type="text" id="country" name="country" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent" placeholder="Country" />
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent"
+                  placeholder="Country"
+                  suppressHydrationWarning // Add this line
+                />
                 <label htmlFor="country" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Country</label>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                <input type="text" id="company" name="company" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent" placeholder="Company Name" />
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent"
+                  placeholder="Company Name"
+                  suppressHydrationWarning // Add this line
+                />
                 <label htmlFor="company" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Company Name</label>
               </div>
               <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-                {/* Perbaikan di sini: Hapus 'selected' dari <option> dan gunakan defaultValue di <select> */}
-                <select id="interested" name="interested" className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent appearance-none" defaultValue="">
+                <select
+                  id="interested"
+                  name="interested"
+                  className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent appearance-none"
+                  defaultValue=""
+                  suppressHydrationWarning // Add this line
+                >
                   <option value="" disabled className="bg-black text-gray-400">Interested in</option>
                   <option value="travel" className="bg-black text-white">Travel</option>
                   <option value="partnership" className="bg-black text-white">Partnership</option>
@@ -94,10 +134,21 @@ const ContactUsSection: React.FC = () => {
               </div>
             </div>
             <div className="relative border-b border-gray-700 focus-within:border-blue-500 pb-2">
-              <textarea id="message" name="message" rows={3} className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent resize-none" placeholder="Message"></textarea>
+              <textarea
+                id="message"
+                name="message"
+                rows={3}
+                className="w-full bg-transparent outline-none text-white text-base peer placeholder-transparent resize-none"
+                placeholder="Message"
+                suppressHydrationWarning // Add this line
+              ></textarea>
               <label htmlFor="message" className="absolute left-0 -top-6 text-gray-400 text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-placeholder-shown:top-0 peer-focus:-top-6 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-300">Message</label>
             </div>
-            <button type="submit" className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 flex items-center gap-2">
+            <button
+              type="submit"
+              className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 flex items-center gap-2"
+              suppressHydrationWarning // Add this line
+            >
               Send Message <Send size={20} />
             </button>
           </form>

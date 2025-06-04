@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { Destination } from '@/app/explore/page'; // Import Destination dari page.tsx (Explore)
 
 interface AddToListProps {
-  place: string;
+  destination: Destination;
 }
 
-const AddToList: React.FC<AddToListProps> = ({ place }) => {
+const AddToList: React.FC<AddToListProps> = ({ destination }) => {
+  const placeName = destination.Place;
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
     const list = JSON.parse(localStorage.getItem('myList') || '[]');
-    setAdded(list.includes(place)); // Cek apakah tempat ada di list
-  }, [place]);
+    setAdded(list.includes(placeName));
+  }, [placeName]);
 
   const handleAddToList = () => {
     const list = JSON.parse(localStorage.getItem('myList') || '[]');
 
     if (added) {
-      const newList = list.filter((item: string) => item !== place);
+      const newList = list.filter((item: string) => item !== placeName);
       localStorage.setItem('myList', JSON.stringify(newList));
       setAdded(false);
-      window.dispatchEvent(new Event('myListUpdated')); // ← Trigger event
+      window.dispatchEvent(new Event('myListUpdated'));
     } else {
-      list.push(place);
+      list.push(placeName);
       localStorage.setItem('myList', JSON.stringify(list));
       setAdded(true);
-      window.dispatchEvent(new Event('myListUpdated')); // ← Trigger event
+      window.dispatchEvent(new Event('myListUpdated'));
     }
   };
 

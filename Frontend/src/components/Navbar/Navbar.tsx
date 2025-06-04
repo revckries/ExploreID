@@ -1,38 +1,107 @@
-import React, { useState, useRef, useEffect } from 'react';
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Filter, Search } from 'lucide-react';
 import SidebarFilter from './SidebarFilter';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
+import { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
+  selectedExperience?: string;
+  selectedActivity?: string;
+  selectedCrowdness?: string;
+  setSelectedExperience?: (value: string) => void;
+  setSelectedActivity?: (value: string) => void;
+  setSelectedCrowdness?: (value: string) => void;
+  onApply?: () => void;
+  onReset?: () => void;
+  showFilter?: boolean;
+  onToggleFilter?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
-  const [showFilter, setShowFilter] = useState(false);
-  const filterRef = useRef<HTMLDivElement | null>(null);
+const Header: React.FC<HeaderProps> = ({
+  searchQuery,
+  onSearchChange,
+  selectedExperience = '',
+  selectedActivity = '',
+  selectedCrowdness = '',
+  setSelectedExperience = () => {},
+  setSelectedActivity = () => {},
+  setSelectedCrowdness = () => {},
+  onApply = () => {},
+  onReset = () => {},
+  showFilter = false,
+  onToggleFilter,
+}) => {
+  const router = useRouter();
+  const filterButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const [selectedExperience, setSelectedExperience] = useState('');
-  const [selectedActivity, setSelectedActivity] = useState('');
-  const [selectedCrowdness, setSelectedCrowdness] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleApplyFilter = () => setShowFilter(false);
-  const handleResetFilter = () => {
-    setSelectedExperience('');
-    setSelectedActivity('');
-    setSelectedCrowdness('');
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: authData } = await supabase.auth.getUser();
+      if (authData?.user) {
+        setUser(authData.user);
+
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('username')
+          .eq('id', authData.user.id)
+          .single();
+
+        if (profileData) {
+          setUsername(profileData.username);
+        }
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setUsername(null);
+    setDropdownOpen(false);
+    window.location.reload();
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
-        setShowFilter(false);
+    const handleSidebarBlur = () => {
+      if (showFilter && onToggleFilter) {
+        onToggleFilter();
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    window.addEventListener('blurFilter', handleSidebarBlur);
+    return () => {
+      window.removeEventListener('blurFilter', handleSidebarBlur);
+    };
+  }, [showFilter, onToggleFilter]);
+
+  const handleSearchSubmitManual = () => {
+    router.push(`/explore?show=all&q=${encodeURIComponent(searchQuery.trim())}&filterOpen=false&animateFilter=false`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmitManual();
+    }
+  };
+
+  const handleFilterButtonClick = () => {
+    if (onToggleFilter) {
+      onToggleFilter();
+    } else {
+      router.push('/explore?show=all&filterOpen=true&animateFilter=false');
+    }
+  };
 
   return (
     <header className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-[#2d2e31] py-4 px-6 rounded-3xl shadow-xl w-[95%] max-w-screen-lg">
@@ -49,51 +118,84 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange }) => {
           </nav>
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className="flex items-center bg-white/90 px-4 py-2 rounded-full shadow-lg w-[400px]">
+        <div className="flex items-center gap-6 justify-end">
+          <div className="flex items-center bg-white/90 px-4 py-2 rounded-full shadow-lg w-[400px]" suppressHydrationWarning>
             <Search className="text-gray-500 mr-2" size={16} />
             <input
               type="text"
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="bg-transparent w-full text-sm text-black placeholder-gray-500 focus:outline-none"
+              suppressHydrationWarning
             />
-            <button className="ml-2 px-3 py-1 bg-blue-300 text-black text-sm font-semibold rounded-full hover:bg-blue-400 transition">
+            <button
+              onClick={handleSearchSubmitManual}
+              className="ml-2 px-3 py-1 bg-blue-300 text-black text-sm font-semibold rounded-full hover:bg-blue-400 transition"
+              suppressHydrationWarning
+            >
               Search
             </button>
           </div>
 
           <button
-            onClick={() => setShowFilter(!showFilter)}
+            ref={filterButtonRef}
+            onClick={handleFilterButtonClick}
             className="flex items-center gap-1 bg-blue-100 px-4 py-2 rounded-full shadow-lg text-black hover:bg-blue-200 transition"
+            suppressHydrationWarning
           >
             <Filter size={16} />
             Filter
           </button>
 
-          <div className="flex gap-4"> 
-            <Link href="/login">
-              <button className="px-4 py-2 bg-blue-300 text-black rounded-full hover:bg-blue-400 transition">
-                Login
-              </button>
-            </Link>
+          <div className="relative">
+            {user ? (
+              <>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition"
+                >
+                  {username ?? user?.email?.split('@')[0] ?? 'User'}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-xl z-50">
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+
+              <Link href="/login">
+                <button className="px-4 py-2 bg-blue-300 text-black rounded-full hover:bg-blue-400 transition">
+                  Login
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
 
-      <SidebarFilter
-        selectedExperience={selectedExperience}
-        selectedActivity={selectedActivity}
-        selectedCrowdness={selectedCrowdness}
-        setSelectedExperience={setSelectedExperience}
-        setSelectedActivity={setSelectedActivity}
-        setSelectedCrowdness={setSelectedCrowdness}
-        onApply={handleApplyFilter}
-        onReset={handleResetFilter}
-        showFilter={showFilter}
-        filterRef={filterRef}
-      />
+      {showFilter && onToggleFilter && (
+        <SidebarFilter
+          selectedExperience={selectedExperience}
+          selectedActivity={selectedActivity}
+          selectedCrowdness={selectedCrowdness}
+          setSelectedExperience={setSelectedExperience}
+          setSelectedActivity={setSelectedActivity}
+          setSelectedCrowdness={setSelectedCrowdness}
+          onApply={onApply}
+          onReset={onReset}
+          showFilter={showFilter}
+          filterRef={filterButtonRef}
+        />
+      )}
     </header>
   );
 };

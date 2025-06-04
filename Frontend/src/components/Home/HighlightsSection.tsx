@@ -91,10 +91,9 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
         <p className="text-base text-gray-300 mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
           {description}
         </p>
-        <Link href={buttonLink}>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
-            {buttonText}
-          </button>
+        {/* MODIFIED PART HERE */}
+        <Link href={buttonLink} className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
+          {buttonText}
         </Link>
       </motion.div>
     </motion.div>

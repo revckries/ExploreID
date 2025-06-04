@@ -7,6 +7,9 @@ import { IoCloseOutline, IoLockClosedOutline } from "react-icons/io5"
 import { BsEnvelope, BsPerson } from "react-icons/bs"
 import { motion, AnimatePresence } from "framer-motion"
 
+// perubahan: import supabase client
+import { supabase } from "@/lib/supabaseClient" // pastikan path ini benar sesuai struktur foldermu
+
 const formVariants = {
   initial: { opacity: 0, y: 50, scale: 0.95 },
   animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
@@ -17,12 +20,44 @@ export default function Register() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false) // State rememberMe ditambahkan kembali
+  const [rememberMe, setRememberMe] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // perubahan: ubah handleSubmit untuk pakai Supabase
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log({ username, email, password, rememberMe }) // Gunakan rememberMe state
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    })
+
+    if (error) {
+      alert("Error registering user: " + error.message)
+      return
+    }
+
+    const user = data.user
+    if (!user) {
+      alert("User not returned from Supabase.")
+      return
+    }
+
+    // perubahan: tambahkan user ke tabel profiles
+    const { error: profileError } = await supabase.from("profiles").insert([
+      {
+        id: user.id,
+        username,
+        email
+      }
+    ])
+
+    if (profileError) {
+      alert("Registered, but failed to save profile: " + profileError.message)
+    } else {
+      alert("Registration successful! Please check your email to verify your account.")
+    }
+
     window.location.href = "/"
   }
 
@@ -70,6 +105,7 @@ export default function Register() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
+                  suppressHydrationWarning
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${username ? "top-[-5px]" : ""}`}
@@ -88,6 +124,7 @@ export default function Register() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
+                  suppressHydrationWarning
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
@@ -106,6 +143,7 @@ export default function Register() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
+                  suppressHydrationWarning
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
@@ -118,9 +156,10 @@ export default function Register() {
                 <label className="text-sm text-white font-medium flex items-center">
                   <input
                     type="checkbox"
-                    checked={rememberMe} // Diikat ke state rememberMe
-                    onChange={(e) => setRememberMe(e.target.checked)} // Mengontrol state rememberMe
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className="mr-2 accent-white"
+                    suppressHydrationWarning
                   />
                   Remember me
                 </label>
@@ -129,6 +168,7 @@ export default function Register() {
               <button
                 type="submit"
                 className="w-full h-12 bg-[#93c5fd] text-[#060c20] border-none outline-none rounded-lg cursor-pointer text-base font-medium transition-all hover:bg-[#93c5fd]/90"
+                suppressHydrationWarning
               >
                 Register
               </button>

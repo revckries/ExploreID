@@ -1,11 +1,12 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation" // perubahan: untuk navigasi setelah login
 import { IoCloseOutline, IoLockClosedOutline } from "react-icons/io5"
 import { BsEnvelope } from "react-icons/bs"
 import { motion, AnimatePresence } from "framer-motion"
+import { supabase } from "@/lib/supabaseClient" // perubahan: import supabase client
 
 const formVariants = {
   initial: { opacity: 1, y: 0, scale: 1 },
@@ -18,24 +19,38 @@ const overlayVariants = {
 }
 
 export default function Login() {
+  const router = useRouter() // perubahan
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("") // perubahan
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  // perubahan: fungsi login dengan Supabase
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsExiting(true)
-    setTimeout(() => {
-      window.location.href = "/"
-    }, 400)
+    setErrorMessage("")
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      setErrorMessage(error.message)
+    } else {
+      setIsExiting(true)
+      setTimeout(() => {
+        router.push("/") // redirect ke homepage setelah login
+      }, 400)
+    }
   }
 
   const handleRegisterClick = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsExiting(true)
     setTimeout(() => {
-      window.location.href = "/register"
+      router.push("/register")
     }, 400)
   }
 
@@ -73,6 +88,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
+                  suppressHydrationWarning
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${email ? "top-[-5px]" : ""}`}
@@ -91,6 +107,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full h-full bg-transparent border-none outline-none text-base text-white font-semibold px-5 py-0"
+                  suppressHydrationWarning
                 />
                 <label
                   className={`absolute top-1/2 left-1 -translate-y-1/2 text-white font-medium pointer-events-none transition-all duration-500 ${password ? "top-[-5px]" : ""}`}
@@ -109,11 +126,15 @@ export default function Login() {
                   />
                   Remember me
                 </label>
-                {/* Modern Link usage, no a tag inside */}
                 <Link href="/forgot-password" className="text-sm text-white hover:underline">
                   Forgot Password?
                 </Link>
               </div>
+
+              {/* perubahan: tampilkan error jika gagal login */}
+              {errorMessage && (
+                <div className="mb-4 text-red-400 text-sm font-medium text-center">{errorMessage}</div>
+              )}
 
               <button
                 type="submit"
@@ -125,7 +146,6 @@ export default function Login() {
               <div className="text-center text-white text-sm font-medium mt-6">
                 <p className="flex flex-col sm:flex-row items-center justify-center gap-2">
                   Don't have an account?
-                  {/* Perbaikan di sini: Langsung bungkus button dengan Link, dan gunakan onClick pada Link */}
                   <Link
                     href="/register"
                     onClick={handleRegisterClick}

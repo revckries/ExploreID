@@ -2,10 +2,11 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
 
 interface SidebarFilterProps {
   showFilter: boolean;
-  filterRef: React.RefObject<HTMLDivElement | null>; // <-- ubah di sini
+  filterRef: React.RefObject<HTMLButtonElement | null>;
   selectedExperience: string;
   selectedActivity: string;
   selectedCrowdness: string;
@@ -29,8 +30,11 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
   onReset,
 }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const animateFilter = searchParams.get('animateFilter');
 
-  // Close dropdown when clicking outside
+  const shouldDisableAnimation = animateFilter === 'false';
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -39,7 +43,6 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
         filterRef.current &&
         !filterRef.current.contains(event.target as Node)
       ) {
-        // blur click, close handled outside
         const blurEvent = new CustomEvent('blurFilter');
         window.dispatchEvent(blurEvent);
       }
@@ -59,10 +62,10 @@ const SidebarFilter: React.FC<SidebarFilterProps> = ({
       {showFilter && (
         <motion.div
           ref={dropdownRef}
-          initial={{ opacity: 0, y: -10 }}
+          initial={shouldDisableAnimation ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
+          transition={shouldDisableAnimation ? { duration: 0 } : { duration: 0.2 }}
           className="absolute top-full right-0 mt-2 w-80 bg-white shadow-xl rounded-xl p-4 z-50"
         >
           <div className="space-y-4">

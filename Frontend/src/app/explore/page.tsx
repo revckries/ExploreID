@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Navbar/Navbar';
 import DetailDestination from '@/components/Explore/DetailDestination';
-import AllDestination from '@/components/Explore/AllDestinations';
+import AllDestinations from '@/components/Explore/AllDestinations';
 import Itinerary from '@/components/Explore/Itinerary';
 import Footer from '@/components/Footer/Footer';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface Destination {
   Place: string;
@@ -37,19 +37,44 @@ const fadeInAnimation = {
   transition: { duration: 0.5 }
 };
 
+// Varian untuk staggering anak-anak
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Jeda 0.1 detik antara animasi anak
+    },
+  },
+};
+
+// Varian untuk setiap item teks
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
 const Explore: React.FC = () => {
   const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [filteredDestinations, setFilteredDestinations] = useState<Destination[]>([]);
   const [favorites, setFavorites] = useState<Destination[]>([]);
   const [topRecommendations, setTopRecommendations] = useState<Destination[]>([]);
-  const [query, setQuery] = useState('');
 
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const place = searchParams.get('place');
   const showAll = searchParams.get('show');
+  const urlQuery = searchParams.get('q') || '';
+
+  const [selectedExperience, setSelectedExperience] = useState<string>('');
+  const [selectedActivity, setSelectedActivity] = useState<string>('');
+  const [selectedCrowdness, setSelectedCrowdness] = useState<string>('');
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     document.documentElement.style.scrollBehavior = 'smooth';
 
     const fetchAllData = async () => {
@@ -61,12 +86,11 @@ const Explore: React.FC = () => {
 
         if (!destRes.ok) throw new Error(`HTTP error! status: ${destRes.status}`);
         if (!reviewRes.ok) throw new Error(`HTTP error! status: ${reviewRes.status}`);
-
+        
         const destData: Destination[] = await destRes.json();
         const reviewData: DestinationReview[] = await reviewRes.json();
 
         setDestinations(destData);
-        setFilteredDestinations(destData);
 
         const placeRatings: { [key: string]: { total: number; count: number } } = {};
         reviewData.forEach(dr => {
@@ -84,7 +108,7 @@ const Explore: React.FC = () => {
           const ratingB = placeRatings[b.Place] ? placeRatings[b.Place].total / placeRatings[b.Place].count : 0;
           return ratingB - ratingA;
         });
-        
+
         setTopRecommendations(sortedRecommendations.slice(0, 8));
 
       } catch (err) {
@@ -98,6 +122,15 @@ const Explore: React.FC = () => {
       document.documentElement.style.scrollBehavior = '';
     };
   }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      setSelectedExperience(searchParams.get('experience') || '');
+      setSelectedActivity(searchParams.get('activity') || '');
+      setSelectedCrowdness(searchParams.get('crowdness') || '');
+      setShowFilter(searchParams.get('filterOpen') === 'true');
+    }
+  }, [searchParams, isClient]);
 
   useEffect(() => {
     const updateFavorites = () => {
@@ -128,98 +161,158 @@ const Explore: React.FC = () => {
     };
   }, [destinations]);
 
-  const handleCardClick = (place: string) => {
-    router.push(`/explore?place=${encodeURIComponent(place)}`);
-  };
+  const updateFilterParams = useCallback((experience: string, activity: string, crowdness: string, filterOpen: boolean, currentQuery: string) => {
+    const params = new URLSearchParams();
+    if (experience) params.set('experience', experience);
+    if (activity) params.set('activity', activity);
+    if (crowdness) params.set('crowdness', crowdness);
+    if (filterOpen) params.set('filterOpen', 'true');
+    params.set('show', 'all');
+    if (currentQuery) params.set('q', currentQuery);
 
-  const handleSearch = (query: string) => {
-    setQuery(query);
-    const filtered = destinations.filter((destination) =>
-      destination.Place.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredDestinations(filtered);
-  };
+    router.push(`/explore?${params.toString()}`);
+  }, [router]);
+
+  const handleSearch = useCallback((searchQuery: string) => {
+    updateFilterParams(selectedExperience, selectedActivity, selectedCrowdness, showFilter, searchQuery);
+  }, [selectedExperience, selectedActivity, selectedCrowdness, showFilter, updateFilterParams]);
+
+  const handleExperienceChange = useCallback((value: string) => {
+    setSelectedExperience(value);
+    updateFilterParams(value, selectedActivity, selectedCrowdness, showFilter, urlQuery);
+  }, [selectedActivity, selectedCrowdness, showFilter, urlQuery, updateFilterParams]);
+
+  const handleActivityChange = useCallback((value: string) => {
+    setSelectedActivity(value);
+    updateFilterParams(selectedExperience, value, selectedCrowdness, showFilter, urlQuery);
+  }, [selectedExperience, selectedCrowdness, showFilter, urlQuery, updateFilterParams]);
+
+  const handleCrowdnessChange = useCallback((value: string) => {
+    setSelectedCrowdness(value);
+    updateFilterParams(selectedExperience, selectedActivity, value, showFilter, urlQuery);
+  }, [selectedExperience, selectedActivity, showFilter, urlQuery, updateFilterParams]);
+
+  const handleApplyFilter = useCallback(() => {
+    setShowFilter(false);
+    updateFilterParams(selectedExperience, selectedActivity, selectedCrowdness, false, urlQuery);
+  }, [selectedExperience, selectedActivity, selectedCrowdness, urlQuery, updateFilterParams]);
+
+  const handleResetFilter = useCallback(() => {
+    setSelectedExperience('');
+    setSelectedActivity('');
+    setSelectedCrowdness('');
+    setShowFilter(false);
+    updateFilterParams('', '', '', false, urlQuery);
+  }, [urlQuery, updateFilterParams]);
+
+  const handleToggleFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+    updateFilterParams(selectedExperience, selectedActivity, selectedCrowdness, !showFilter, urlQuery);
+  }, [selectedExperience, selectedActivity, selectedCrowdness, showFilter, urlQuery, updateFilterParams]);
+
+  const handleCardClick = useCallback((place: string) => {
+    router.push(`/explore?place=${encodeURIComponent(place)}`);
+  }, [router]);
 
   if (place && destinations.length > 0) {
     return <DetailDestination place={place} destinations={destinations} />;
   }
 
-  const isSearching = query && query.trim() !== '';
+  const shouldShowAllDestinations = showAll === 'all' || urlQuery || selectedExperience || selectedActivity || selectedCrowdness;
 
   return (
-    <motion.div
+    <div
       className="min-h-screen bg-[#060c20] text-white overflow-x-hidden relative"
-      {...fadeInAnimation}
     >
       <main className="flex-1 py-6 max-w-7xl mx-auto px-4 transition-all duration-500">
-        <Header searchQuery={query} onSearchChange={handleSearch} />
+        <Header
+          searchQuery={urlQuery}
+          onSearchChange={handleSearch}
+          selectedExperience={selectedExperience}
+          selectedActivity={selectedActivity}
+          selectedCrowdness={selectedCrowdness}
+          setSelectedExperience={handleExperienceChange}
+          setSelectedActivity={handleActivityChange}
+          setSelectedCrowdness={handleCrowdnessChange}
+          onApply={handleApplyFilter}
+          onReset={handleResetFilter}
+          showFilter={showFilter}
+          onToggleFilter={handleToggleFilter}
+        />
 
-        {showAll === 'all' ? (
-          <motion.div {...fadeInAnimation}>
-            <AllDestination destinations={destinations} />
-          </motion.div>
-        ) : isSearching ? (
-          <motion.div className="mt-32 transition-all duration-500" {...fadeInAnimation}>
-            <h2 className="text-2xl font-semibold mb-4">
-              {query ? `Search Results for "${query}"` : 'Explore Destination'}
-            </h2>
-            {filteredDestinations.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {filteredDestinations.map((dest) => (
-                  <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-400">No results found for "{query}".</p>
-            )}
-          </motion.div>
-        ) : (
-          <motion.div {...fadeInAnimation}>
-            <div className="mt-32 mb-6 transition-all duration-500">
-              <h2 className="text-2xl font-semibold mb-4">Favorite Destination</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {favorites.length > 0 ? (
-                  favorites.map((dest) => (
-                    <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
-                  ))
-                ) : (
-                  <div className="col-span-4 text-center text-white transition-all duration-500">
-                    <p className="text-xl">Oops! Your favorite destinations are empty.</p>
-                    <p className="text-gray-400 mt-2">
-                      Start exploring and add your favorite destinations to this list!
-                    </p>
-                    <p className="mt-4 text-blue-300 font-bold">Get started now!</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Top Recommendations Section with Show All Button */}
-            {topRecommendations.length > 0 && (
-              <div className="mt-10 mb-6 transition-all duration-500">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-2xl font-semibold">Top Recommendations</h2>
-                  <button
-                    onClick={() => router.push('/explore?show=all')}
-                    className="text-blue-300 hover:underline"
-                  >
-                    Show All →
-                  </button>
-                </div>
+        {isClient ? (
+          shouldShowAllDestinations ? (
+            <motion.div
+              key="all-destinations-view"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.h2 variants={itemVariants} className="text-2xl font-semibold text-center w-full mb-10 mt-32">
+                {urlQuery || selectedExperience || selectedActivity || selectedCrowdness ? `Search/Filter Results` : 'All Destinations in Bali'}
+              </motion.h2>
+              <AllDestinations
+                initialQuery={urlQuery}
+                selectedExperience={selectedExperience}
+                selectedActivity={selectedActivity}
+                selectedCrowdness={selectedCrowdness}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="default-explore-view"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="mt-32 mb-6 transition-all duration-500">
+                <motion.h2 variants={itemVariants} className="text-2xl font-semibold mb-4">Favorite Destination</motion.h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {topRecommendations.map((dest) => (
-                    <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
-                  ))}
+                  {favorites.length > 0 ? (
+                    favorites.map((dest) => (
+                      <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
+                    ))
+                  ) : (
+                    <motion.div variants={itemVariants} className="col-span-4 text-center text-white transition-all duration-500">
+                      <p className="text-xl">Oops! Your favorite destinations are empty.</p>
+                      <p className="text-gray-400 mt-2">
+                        Start exploring and add your favorite destinations to this list!
+                      </p>
+                      <p className="mt-4 text-blue-300 font-bold">Get started now!</p>
+                    </motion.div>
+                  )}
                 </div>
               </div>
-            )}
-          </motion.div>
+
+              {topRecommendations.length > 0 && (
+                <div className="mt-10 mb-6 transition-all duration-500">
+                  <div className="flex justify-between items-center mb-4">
+                    <motion.h2 variants={itemVariants} className="text-2xl font-semibold">Top Recommendations</motion.h2>
+                    <motion.button
+                      variants={itemVariants}
+                      onClick={() => router.push('/explore?show=all')}
+                      className="text-blue-300 hover:underline"
+                    >
+                      Show All →
+                    </motion.button>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    {topRecommendations.map((dest) => (
+                      <DestinationCard key={dest.Place} dest={dest} onClick={handleCardClick} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )
+        ) : (
+          <div className="mt-32 text-center text-gray-400">Loading content...</div>
         )}
       </main>
 
-      <Itinerary place={query || 'your destination'} />
+      <Itinerary place={place || urlQuery || 'your destination'} />
       <Footer />
-    </motion.div>
+    </div>
   );
 };
 
