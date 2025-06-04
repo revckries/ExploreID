@@ -8,3 +8,4 @@ PyJWT
 bcrypt
 Flask-SQLAlchemy
 requests
+supabase
