@@ -86,7 +86,7 @@ Before running the project locally, make sure the following are installed:
 
 ```bash
 1. cd Frontend 
-2. npm install (if you already have node modules, you can skip this)
+2. npm install # if you already have node modules, you can skip this
 3. npm run dev
 ```
 
